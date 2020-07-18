@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Paul Finol" content="Proyect 2 ACAMICA">
+    <meta name="description" content="Second Proyect for Full Stack">
+    <meta name="keywords" content="acamica, full stack, html" />
+    <link rel="shortcut icon" type="image/png" href="./images/gifOF_logo.png" />
+    <link id="pageStyle" rel="stylesheet" href="./styles/styles_day.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Chakra+Petch:400,700&display=swap">
+    <script src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
+    <script src="https://www.webrtc-experiment.com/gif-recorder.js"></script>
+    <script src="https://www.webrtc-experiment.com/common.js"></script>
+    <script src="./scripts/fetch_GIF.js"></script>
+    <title>GIF Factory</title>
+</head>
+
+<body onload="fixed_suggested_function(`winter`,`autumn`,`summer`,`spring`)">
+
+    <!-- first header in top of the page -->
+    <header>
+        <p>¡Bienvenidos/as a Guifos.com! ——————Donde los gifs están.////// Número de visitas: 12.765.803</p>
+    </header>
+
+    <!-- Logo en buttons -->
+
+    <nav>
+
+        <div class="logo">
+            <img id="logo" src="./images/gifOF_logo.png" alt="gifOF_logo">
+        </div>
+        <div class="button1">
+            <button type="button" class="button_crear_GIF" id="button_crear_GIF">
+                    Crear Guifos
+                </button>
+        </div>
+        <div class="button2">
+            <button class="selectStylesheet" id="selectStylesheet" type="button">
+                    Elegir tema
+                </button>
+        </div>
+        <ul class="button2_theme">
+            <li><button id="button_change_day">Sailor Day</button></li>
+            <li><button id="button_change_night">Sailor Night</button></li>
+        </ul>
+        <div class="button2_1">
+            <button type="button" class="selectStylesheet" id="selectStylesheet2">
+                <object type="image/svg+xml" id="drop" data="./images/dropdown.svg" ></object>
+            </button>
+        </div>
+        <button type="button" class="migif" id="migif">            
+            <span id="migif_span"> Mis Guifos</span>
+        </button>
+    </nav>
+    <!-- Search area -->
+    <section id="Search_section">
+        <div class="search_area">
+            <div class="search_title">
+                <p>Buscar</p>
+            </div>
+            <div class="search_text">
+                <input type="text" id="keyword_GIF" placeholder="Buscar GIF">
+            </div>
+            <div class="search_lupa">
+                <button type="button" class="search_GIF_button" disabled>
+                    <span id="buscar">Buscar</span>
+                    <object type="image/svg+xml" data="./images/lupa.svg" class="lupa">
+                    </object>                    
+                </button>
+            </div>
+        </div>
+
+        <!-- Hidden search area -->
+
+        <ul class="search_hidden">
+        </ul>
+        <ul class="search_hidden2">
+        </ul>
+    </section>
+
+    <section id="crear_GIF">
+
+    </section>
+
+
+    <!-- Suggested GIFs -->
+
+    <section id="Suggested">
+        <div class="text1">
+            <p>Hoy te sugerimos</p>
+        </div>
+    </section>
+
+    <!-- Trend GIFs -->
+
+    <section id="Trend">
+        <div class="text2">
+            <p>Tendencias</p>
+        </div>
+    </section>
+    <!--------------------------- JAVA SCRIPT ------------------------------>
+
+    <script>
+        // Event handler for all buttons 
+        window.addEventListener("click", function(event) {
+            console.log(event.target.id);
+            switch (event.target.id) {
+
+                case "logo":
+                    window.location.assign("./index.html");
+                    break;
+                case "migif_span":
+                    window.location.assign("./mis_GIF.html");
+                    break;
+                case "button_crear_GIF":
+                    window.location.assign("./crear_GIF.html");
+                    break;
+                case "selectStylesheet":
+                case "selectStylesheet2":
+                case "drop":
+                    document.getElementsByClassName("button2_theme")[0].classList.toggle("show");
+                    break;
+                case "button_change_day":
+                    document.getElementById('pageStyle').setAttribute('href', './styles/styles_day.css');
+                    document.getElementById('logo').setAttribute('src', './images/gifOF_logo.png');
+                    document.getElementsByClassName("button2_theme")[0].classList.remove("show");
+                    break
+                case "button_change_night":
+                    document.getElementById('pageStyle').setAttribute('href', './styles/styles_night.css');
+                    document.getElementById('logo').setAttribute('src', './images/gifOF_logo_dark.png');
+                    document.getElementsByClassName('lupa')[0].setAttribute('data', './images/Combined Shape.svg');
+                    document.getElementsByClassName("button2_theme")[0].classList.remove("show");
+                    break
+                default:
+                    document.getElementsByClassName("button2_theme")[0].classList.remove("show");
+                    break;
+            }
+
+        })
+
+        //Function to show or hide tags title in trend GIF*/
+
+        function showtag(event) {
+            let imgid = event.target.id;
+            if ((imgid != "img_sug1") && (imgid != "img_sug2") && (imgid != "img_sug3") && (imgid != "img_sug4")) {
+                let titleid = imgid.replace("img_sug", "gif_title");
+                document.getElementById(titleid).style.display = "inline";
+            }
+        }
+
+        function hidetag(event) {
+            let imgid = event.target.id;
+            if ((imgid != "img_sug1") && (imgid != "img_sug2") && (imgid != "img_sug3") && (imgid != "img_sug4")) {
+                let titleid = imgid.replace("img_sug", "gif_title");
+                document.getElementById(titleid).removeAttribute("style");
+            }
+        }
+
+        /* When the user types on search button, add/rem suggested valuess when input>3*/
+
+        var search_hidden_bar = document.getElementsByClassName("search_hidden");
+        /* When the user press Enter calls trend GIF function*/
+        document.getElementById('keyword_GIF').addEventListener("keydown", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementsByClassName('search_GIF_button')[0].click();
+                search_hidden_bar[0].classList.remove("show");
+            }
+            //autocomplete fetch for predictive search values
+            var type = "autocomplete";
+            let type_search_bar_input = document.getElementById('keyword_GIF').value;
+            if (type_search_bar_input.length > 3) {
+                document.getElementsByClassName('search_GIF_button')[0].removeAttribute("disabled");
+                document.getElementsByClassName('search_GIF_button')[0].classList.add('search_lupa_input_active')
+                if (document.getElementById('logo').getAttribute('src') == ('./images/gifOF_logo.png')) {
+                    document.getElementsByClassName('lupa')[0].setAttribute('data', './images/lupa.svg');
+                } else {
+                    document.getElementsByClassName('lupa')[0].setAttribute('data', './images/lupa_light.svg');
+                }
+                document.getElementById("buscar").classList.add("span_white");
+                fetch_Function(type_search_bar_input, type);
+            } else {
+                document.getElementsByClassName('search_GIF_button')[0].setAttribute("disabled", "");
+                search_hidden_bar[0].classList.remove("show");
+                document.getElementsByClassName('search_GIF_button')[0].classList.remove('search_lupa_input_active')
+                document.getElementsByClassName('lupa')[0].setAttribute('data', './images/Combined Shape.svg');
+                document.getElementById("buscar").classList.remove("span_white");
+            }
+        });
+
+
+        // trigger all methods to search GIF
+        document.getElementsByClassName('search_GIF_button')[0].addEventListener('click', suggested_search_function);
+        var s = 0;
+
+        function suggested_search_function(event) {
+            var type = "trend";
+            search_input = document.getElementById('keyword_GIF').value;
+            switch (event.target.className) {
+                case "Ver_Mas1":
+                    search_input = "winter";
+                    break;
+                case "Ver_Mas2":
+                    search_input = "autumn";
+                    break;
+                case "Ver_Mas3":
+                    search_input = "summer";
+                    break;
+                case "Ver_Mas4":
+                    search_input = "spring";
+                    break;
+                case "search_sugg":
+                    search_input = event.target.value;
+                    break;
+            }
+            // Hide  suggested section
+            document.getElementById("Suggested").classList.add("hide");
+            // Hide  search bar
+            search_hidden_bar[0].classList.remove("show");
+            document.getElementsByClassName('search_GIF_button')[0].classList.remove('search_lupa_input_active')
+            document.getElementsByClassName('lupa')[0].setAttribute('data', './images/Combined Shape.svg');
+            document.getElementById("buscar").classList.remove("span_white");
+            // call function to show previous search
+            previous_search_function();
+            document.getElementsByClassName("search_hidden2")[0].classList.add("show2");
+            //remove previous container
+            document.getElementById(`container_trend`).remove();
+            //save search in session storage
+            document.getElementById('container_suggested').innerHTML = "";
+            if ((type == "trend") && (search_input != "")) {
+                s++;
+                sessionStorage.setItem(s, search_input);
+            }
+            document.getElementById('keyword_GIF').value = "";
+            document.getElementsByClassName('search_GIF_button')[0].setAttribute("disabled", "");
+            //fill trend GIFs
+            fetch_Function(search_input, type);
+        }
+
+        // Create hidden search panel, GIF is output from fetch funtion
+        function create_search_values(GIF) {
+            search_hidden_bar[0].innerHTML = '';
+            search_hidden_bar[0].classList.add("show");
+            for (let i = 0; i < 3; i++) {
+                document.getElementsByClassName(`search_hidden`)[0].appendChild(document.createElement("li")).appendChild(document.createElement("input")).value = GIF.data[i].name;
+                console.log(GIF.data[i].name);
+                document.querySelector(`.search_hidden li:last-child input`).addEventListener('click', suggested_search_function);
+                document.querySelector(`.search_hidden li:last-child input`).className = `search_sugg`;
+            }
+        }
+        /* function to create previous search values*/
+        function previous_search_function() {
+            document.getElementsByClassName('search_hidden2')[0].innerHTML = "";
+            for (let i = 1; i < sessionStorage.length; i++) {
+                document.getElementsByClassName('search_hidden2')[0].appendChild(document.createElement("li")).appendChild(document.createElement("p")).innerHTML = sessionStorage.getItem(i);
+            }
+        }
+
+        /* call fetch function for suggested onload*/
+        function fixed_suggested_function(input1, input2, input3, input4) {
+            document.getElementById(`Suggested`).appendChild(document.createElement("div")).id = `container_suggested`;
+            fetch_Function(input1, "sugg", 1)
+                .then(response => {
+                    return fetch_Function(input2, "sugg", 2);
+                })
+                .then(response => {
+                    return fetch_Function(input3, "sugg", 3);
+                })
+                .then(response => {
+                    return fetch_Function(input4, "sugg", 4);
+                })
+                .then(response => {
+                    return fetch_Function("party", "trend");
+                })
+        }
+    </script>
+
+</body>

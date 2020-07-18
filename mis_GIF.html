@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Paul Finol" content="Proyect 2 ACAMICA">
+    <meta name="description" content="Second Proyect for Full Stack">
+    <meta name="keywords" content="acamica, full stack, html" />
+    <link rel="shortcut icon" type="image/png" href="./images/gifOF_logo.png" />
+    <link id="pageStyle" rel="stylesheet" href="./styles/styles_day.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Chakra+Petch:400,700&display=swap">
+    <script src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
+    <script src="https://www.webrtc-experiment.com/gif-recorder.js"></script>
+    <script src="https://www.webrtc-experiment.com/common.js"></script>
+    <script src="./scripts/fetch_GIF.js"></script>
+    <script src="./scripts/mis_GIF.js"></script>
+    <title>GIF Factory</title>
+</head>
+
+<body onload="bring_mis_GIF()">
+    <!-- first header in top of the page -->
+    <header>
+        <p>¡Bienvenidos/as a Guifos.com! ——————Donde los gifs están.////// Número de visitas: 12.765.803</p>
+    </header>
+    <!-- Button area under NAV tag  -->
+    <nav>
+        <div class="logo">
+            <img id="logo" src="./images/gifOF_logo.png" alt="gifOF_logo">
+        </div>
+        <div class="button1">
+            <button type="button" class="button_crear_GIF" id="button_crear_GIF">
+                    Crear Guifos
+                </button>
+        </div>
+        <div class="button2">
+            <button class="selectStylesheet" id="selectStylesheet" type="button">
+                    Elegir tema
+                </button>
+        </div>
+        <ul class="button2_theme">
+            <li><button id="button_change_day">Sailor Day</button></li>
+            <li><button id="button_change_night">Sailor Night</button></li>
+        </ul>
+        <div class="button2_1">
+            <button type="button" class="selectStylesheet" id="selectStylesheet2">
+                <object type="image/svg+xml" id="drop" data="./images/dropdown.svg" ></object>
+            </button>
+        </div>
+        <button type="button" class="migif" id="migif">            
+            <span id="migif_span"> Mis Guifos</span>
+        </button>
+    </nav>
+    <!-- Mis GIF section -->
+    <section id="crear_GIF">
+    </section>
+
+    <section id="Trend">
+        <div class="text2">
+            <p>Mis guifos</p>
+        </div>
+    </section>
+</body>
